@@ -175,7 +175,15 @@ function App() {
         <button
           onClick={() => {
             const cv = document.getElementById("cv-component");
-            html2pdf(cv);
+            const opt = {
+              margin: [15, 15],
+              filename: "cv.pdf",
+              html2canvas: { scale: 2, letterRendering: true },
+              image: { type: "jpeg", quality: 1 },
+              jsPDF: { unit: "pt", format: "letter", orientation: "portrait" },
+              pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+            };
+            html2pdf().from(cv).set(opt).save();
           }}
         >
           Save as PDF
