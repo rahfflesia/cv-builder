@@ -1,0 +1,42 @@
+.cv-section {
+  max-width: 900px;
+  gap: 1rem;
+}
+
+.cv-header {
+  color: #fff;
+  background-color: black;
+  padding: 0.5rem;
+}
+
+.cv-header > h1 {
+  font-weight: 900;
+}
+
+.professional-summary,
+.cv-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.professional-summary-paragraph,
+.skills-area,
+.custom-information-paragraph {
+  padding: 0.75rem;
+  padding-bottom: 0;
+  line-height: 1.3;
+}
+
+.professional-summary-paragraph {
+  line-height: 1.5;
+}
+
+ul > li {
+  list-style-position: inside;
+  flex: 1 1 50%;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+}

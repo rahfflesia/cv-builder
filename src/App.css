@@ -1,0 +1,25 @@
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.data-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cv-section {
+  background-color: #fff;
+  padding: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

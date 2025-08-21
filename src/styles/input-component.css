@@ -1,0 +1,148 @@
+:root {
+  --medium-pading: 1.25rem;
+  --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --border-radius-value: 0.6rem;
+  --gap-value: 0.5rem;
+  --input-color: rgb(248, 248, 248);
+  --component-bg-color: #fff;
+  --button-fs-color: black;
+}
+
+.input-component {
+  padding: calc(var(--medium-pading) - 0.25rem);
+  max-width: 300px;
+  box-shadow: var(--shadow);
+  border-radius: var(--border-radius-value);
+  background-color: var(--component-bg-color);
+}
+
+.input-wrapper,
+.input-section,
+.date-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-value);
+}
+
+.hide {
+  display: none;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.header,
+.title,
+.arrow,
+.outer-date-wrapper,
+.general-info-cv,
+.data {
+  display: flex;
+}
+
+.header {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title,
+.arrow {
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  gap: var(--gap-value);
+}
+
+input,
+textarea {
+  border: none;
+  padding: calc(var(--medium-pading) * 0.5);
+  border-radius: var(--border-radius-value);
+  background-color: var(--input-color);
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.arrow {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-value);
+}
+
+.arrow:hover {
+  background-color: var(--input-color);
+}
+
+button {
+  border: 2px solid var(--input-color);
+  background-color: var(--component-bg-color);
+  color: var(--button-fs-color);
+  font-weight: bold;
+  border-radius: var(--border-radius-value);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.02);
+}
+
+.button-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.img-wrapper {
+  max-width: 175px;
+}
+
+.general-info-cv {
+  gap: 1rem;
+}
+
+.email,
+.phone-number,
+.location {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: 500;
+}
+
+.data {
+  gap: 1rem;
+}
+
+.personal-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.name {
+  font-weight: 900;
+  font-size: 3rem;
+}
+
+textarea,
+input,
+label {
+  font-size: 0.8rem;
+}
+
+.work-experience-component,
+.education-component {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--input-color);
+  padding-bottom: 1rem;
+}
