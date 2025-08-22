@@ -7,6 +7,7 @@ export default function Work({
   addClickHandler,
   submitClickHandler,
   onChange,
+  onDelete,
 }) {
   const [visible, setVisible] = useState(false);
   return (
@@ -20,19 +21,29 @@ export default function Work({
       ></Header>
       <div className={visible ? "input-section" : "hide"}>
         <label htmlFor="">Work experience</label>
-        {workExperienceArray.map((_, index) => (
+        {workExperienceArray.map((workExperienceObject, index) => (
           <div className="work-experience-component">
             <span>
               <strong>Job {index + 1}</strong>
             </span>
             <div className="input-wrapper">
-              <label htmlFor="">Company</label>
+              <label htmlFor="" className="title">
+                Company{" "}
+                <span
+                  onClick={() => {
+                    onDelete(index);
+                  }}
+                >
+                  <strong>Delete</strong>
+                </span>
+              </label>
               <input
                 type="text"
                 placeholder="Enter the name of the company"
                 onChange={(e) => {
                   onChange(e.target.value, index, "company");
                 }}
+                value={workExperienceObject.company}
               />
             </div>
             <div className="input-wrapper">
@@ -43,6 +54,7 @@ export default function Work({
                 onChange={(e) => {
                   onChange(e.target.value, index, "location");
                 }}
+                value={workExperienceObject.location}
               />
             </div>
             <div className="input-wrapper">
@@ -53,6 +65,7 @@ export default function Work({
                 onChange={(e) => {
                   onChange(e.target.value, index, "role");
                 }}
+                value={workExperienceObject.role}
               />
             </div>
             <div className="input-wrapper">
@@ -62,6 +75,7 @@ export default function Work({
                 onChange={(e) => {
                   onChange(e.target.value, index, "roleDescription");
                 }}
+                value={workExperienceObject.roleDescription}
               ></textarea>
             </div>
             <div className="outer-date-wrapper">
@@ -72,6 +86,7 @@ export default function Work({
                   onChange={(e) => {
                     onChange(e.target.value, index, "startDate");
                   }}
+                  value={workExperienceObject.startDate}
                 />
               </div>
               <div className="date-wrapper">
@@ -81,6 +96,7 @@ export default function Work({
                   onChange={(e) => {
                     onChange(e.target.value, index, "endDate");
                   }}
+                  value={workExperienceObject.endDate}
                 />
               </div>
             </div>

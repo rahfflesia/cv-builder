@@ -7,6 +7,7 @@ export default function Education({
   onChange,
   addClickHandler,
   submitClickHandler,
+  onDelete,
 }) {
   const [visible, setVisible] = useState(false);
   return (
@@ -19,19 +20,29 @@ export default function Education({
         }}
       ></Header>
       <div className={visible ? "input-section" : "hide"}>
-        {educationHistoryArray.map((_, index) => (
+        {educationHistoryArray.map((educationHistoryObject, index) => (
           <div className="education-component">
-            <label htmlFor="">
+            <span>
               <strong>School History {index + 1}</strong>
-            </label>
+            </span>
             <div className="input-wrapper">
-              <label htmlFor="">School</label>
+              <label htmlFor="" className="title">
+                School{" "}
+                <span
+                  onClick={() => {
+                    onDelete(index);
+                  }}
+                >
+                  <strong>Delete</strong>
+                </span>
+              </label>
               <input
                 type="text"
                 placeholder="Enter your school name"
                 onChange={(e) => {
                   onChange(e.target.value, index, "schoolName");
                 }}
+                value={educationHistoryObject.schoolName}
               />
             </div>
             <div className="input-wrapper">
@@ -42,6 +53,7 @@ export default function Education({
                 onChange={(e) => {
                   onChange(e.target.value, index, "location");
                 }}
+                value={educationHistoryObject.location}
               />
             </div>
             <div className="input-wrapper">
@@ -52,6 +64,7 @@ export default function Education({
                 onChange={(e) => {
                   onChange(e.target.value, index, "degree");
                 }}
+                value={educationHistoryObject.degree}
               />
             </div>
             <div className="input-wrapper">
@@ -61,6 +74,7 @@ export default function Education({
                 onChange={(e) => {
                   onChange(e.target.value, index, "degreeDescription");
                 }}
+                value={educationHistoryObject.degreeDescription}
               ></textarea>
             </div>
             <div className="outer-date-wrapper">
@@ -71,6 +85,7 @@ export default function Education({
                   onChange={(e) => {
                     onChange(e.target.value, index, "startDate");
                   }}
+                  value={educationHistoryObject.startDate}
                 />
               </div>
               <div className="date-wrapper">
@@ -80,6 +95,7 @@ export default function Education({
                   onChange={(e) => {
                     onChange(e.target.value, index, "endDate");
                   }}
+                  value={educationHistoryObject.endDate}
                 />
               </div>
             </div>

@@ -146,3 +146,41 @@ label {
   border-bottom: 2px solid var(--input-color);
   padding-bottom: 1rem;
 }
+
+.input-inner-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-inner-wrapper > input {
+  flex: 1;
+}
+
+.delete-logo {
+  display: grid;
+  place-items: center;
+  border: 2px solid rgb(194, 194, 194);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: transform 0.25s ease-in-out 0s;
+}
+
+.delete-logo:hover {
+  transform: scale(1.15);
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title > span {
+  cursor: pointer;
+}
+
+.title > span:hover {
+  background-color: var(--input-color);
+  border-radius: 0.5rem;
+}

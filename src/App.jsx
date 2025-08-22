@@ -65,6 +65,14 @@ function App() {
     });
   }
 
+  function onSkillDelete(index) {
+    setSkills((prev) => {
+      const copy = [...prev];
+      copy.splice(index, 1);
+      return copy;
+    });
+  }
+
   /* Custom information state variables */
   const [customInfo, setCustomInfo] = useState(new CustomInfo());
   const [updatedCustomInfo, setUpdatedCustomInfo] = useState(
@@ -100,6 +108,14 @@ function App() {
     });
   }
 
+  function onWorkExperienceDelete(index) {
+    setWorkExperience((prev) => {
+      const copy = [...prev];
+      copy.splice(index, 1);
+      return copy;
+    });
+  }
+
   /* Education history state variables */
   const [educationHistory, setEducationHistory] = useState([]);
   const [updatedEducationHistory, setUpdatedEducationHistory] = useState([
@@ -117,6 +133,14 @@ function App() {
     setEducationHistory((prev) => {
       const copy = [...prev];
       copy[index] = { ...copy[index], [property]: value };
+      return copy;
+    });
+  }
+
+  function onEducationHistoryDelete(index) {
+    setEducationHistory((prev) => {
+      const copy = [...prev];
+      copy.splice(index, 1);
       return copy;
     });
   }
@@ -145,6 +169,7 @@ function App() {
           submitClickHandler={() => {
             setSkillsValues(skills);
           }}
+          onDelete={onSkillDelete}
         ></Skills>
         <Education
           educationHistoryArray={educationHistory}
@@ -155,6 +180,7 @@ function App() {
           submitClickHandler={() => {
             setUpdatedEducationHistory(educationHistory);
           }}
+          onDelete={onEducationHistoryDelete}
         ></Education>
         <Work
           workExperienceArray={workExperience}
@@ -165,6 +191,7 @@ function App() {
             setUpdatedWorkExperience(workExperience);
           }}
           onChange={onWorkExperienceChange}
+          onDelete={onWorkExperienceDelete}
         ></Work>
         <CustomInformation
           setCustomInfo={setCustomInfo}
