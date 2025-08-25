@@ -1,15 +1,27 @@
 import { useState } from "react";
 import "../../styles/input-component.css";
 import Header from "./Header";
+import WorkExperience from "../../classes/workExperience";
 
-export default function Work({
-  workExperienceArray,
-  addClickHandler,
-  submitClickHandler,
-  onChange,
-  onDelete,
-}) {
+export default function Work({ setUpdatedWorkExperience }) {
   const [visible, setVisible] = useState(false);
+  const [workExperience, setWorkExperience] = useState([]);
+
+  function onWorkExperienceChange(value, index, property) {
+    setWorkExperience((prev) => {
+      const copy = [...prev];
+      copy[index] = { ...copy[index], [property]: value };
+      return copy;
+    });
+  }
+
+  function onWorkExperienceDelete(index) {
+    setWorkExperience((prev) => {
+      const copy = [...prev];
+      copy.splice(index, 1);
+      return copy;
+    });
+  }
   return (
     <div className="input-component">
       <Header
@@ -21,7 +33,7 @@ export default function Work({
       ></Header>
       <div className={visible ? "input-section" : "hide"}>
         <label htmlFor="">Work experience</label>
-        {workExperienceArray.map((workExperienceObject, index) => (
+        {workExperience.map((workExperienceObject, index) => (
           <div className="work-experience-component">
             <span>
               <strong>Job {index + 1}</strong>
@@ -31,7 +43,7 @@ export default function Work({
                 Company{" "}
                 <span
                   onClick={() => {
-                    onDelete(index);
+                    onWorkExperienceDelete(index);
                   }}
                 >
                   <strong>Delete</strong>
@@ -41,7 +53,7 @@ export default function Work({
                 type="text"
                 placeholder="Enter the name of the company"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "company");
+                  onWorkExperienceChange(e.target.value, index, "company");
                 }}
                 value={workExperienceObject.company}
               />
@@ -52,7 +64,7 @@ export default function Work({
                 type="text"
                 placeholder="Enter the location of the company"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "location");
+                  onWorkExperienceChange(e.target.value, index, "location");
                 }}
                 value={workExperienceObject.location}
               />
@@ -63,7 +75,7 @@ export default function Work({
                 type="text"
                 placeholder="Enter your role title"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "role");
+                  onWorkExperienceChange(e.target.value, index, "role");
                 }}
                 value={workExperienceObject.role}
               />
@@ -73,7 +85,11 @@ export default function Work({
               <textarea
                 placeholder="Briefly describe the role"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "roleDescription");
+                  onWorkExperienceChange(
+                    e.target.value,
+                    index,
+                    "roleDescription"
+                  );
                 }}
                 value={workExperienceObject.roleDescription}
               ></textarea>
@@ -84,7 +100,7 @@ export default function Work({
                 <input
                   type="date"
                   onChange={(e) => {
-                    onChange(e.target.value, index, "startDate");
+                    onWorkExperienceChange(e.target.value, index, "startDate");
                   }}
                   value={workExperienceObject.startDate}
                 />
@@ -94,7 +110,7 @@ export default function Work({
                 <input
                   type="date"
                   onChange={(e) => {
-                    onChange(e.target.value, index, "endDate");
+                    onWorkExperienceChange(e.target.value, index, "endDate");
                   }}
                   value={workExperienceObject.endDate}
                 />
@@ -105,14 +121,14 @@ export default function Work({
         <div className="button-wrapper">
           <button
             onClick={() => {
-              addClickHandler();
+              setWorkExperience((array) => [...array, new WorkExperience()]);
             }}
           >
             Add
           </button>
           <button
             onClick={() => {
-              submitClickHandler();
+              setUpdatedWorkExperience(workExperience);
             }}
           >
             Submit

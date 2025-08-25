@@ -1,10 +1,11 @@
 import "./../../styles/input-component.css";
 import { useState } from "react";
 import Header from "./Header";
+import GeneralInfo from "../../classes/generalInfo";
 
-export default function General({ setGeneralInfo, onClick }) {
+export default function General({ setLatestGeneralInfo }) {
   const [visible, setVisible] = useState(false);
-
+  const [generalInfo, setGeneralInfo] = useState(new GeneralInfo());
   return (
     <div className="input-component">
       <Header
@@ -72,7 +73,7 @@ export default function General({ setGeneralInfo, onClick }) {
         <div className="button-wrapper">
           <button
             onClick={() => {
-              onClick();
+              setLatestGeneralInfo(generalInfo);
             }}
           >
             Submit

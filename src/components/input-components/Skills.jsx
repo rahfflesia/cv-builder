@@ -3,14 +3,25 @@ import "../../styles/input-component.css";
 import Header from "./Header";
 import DeleteLogo from "../../../public/icons/delete.png";
 
-export default function Skills({
-  skillsArray,
-  addClickHandler,
-  submitClickHandler,
-  onChange,
-  onDelete,
-}) {
+export default function Skills({ setSkillsValues }) {
   const [visible, setVisible] = useState(false);
+  const [skills, setSkills] = useState([]);
+
+  function onSkillChange(value, index) {
+    setSkills((prev) => {
+      const copy = [...prev];
+      copy[index] = value;
+      return copy;
+    });
+  }
+
+  function onSkillDelete(index) {
+    setSkills((prev) => {
+      const copy = [...prev];
+      copy.splice(index, 1);
+      return copy;
+    });
+  }
   return (
     <div className="input-component">
       <Header
@@ -23,20 +34,20 @@ export default function Skills({
       <div className={visible ? "input-section" : "hide"}>
         <div className="input-wrapper">
           <label htmlFor="">Skills</label>
-          {skillsArray.map((skillValue, index) => (
+          {skills.map((skillValue, index) => (
             <div className="input-inner-wrapper">
               <input
                 type="text"
                 placeholder="Enter your skill"
                 onChange={(e) => {
-                  onChange(e.target.value, index);
+                  onSkillChange(e.target.value, index);
                 }}
                 value={skillValue}
               />
               <div
                 className="delete-logo"
                 onClick={() => {
-                  onDelete(index);
+                  onSkillDelete(index);
                 }}
               >
                 <img
@@ -52,14 +63,14 @@ export default function Skills({
         <div className="button-wrapper">
           <button
             onClick={() => {
-              addClickHandler();
+              setSkills((array) => [...array, ""]);
             }}
           >
             Add
           </button>
           <button
             onClick={() => {
-              submitClickHandler();
+              setSkillsValues(skills);
             }}
           >
             Submit

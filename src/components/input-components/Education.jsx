@@ -1,15 +1,27 @@
 import { useState } from "react";
 import "../../styles/input-component.css";
 import Header from "./Header";
+import EducationHistory from "../../classes/educationHistory";
 
-export default function Education({
-  educationHistoryArray,
-  onChange,
-  addClickHandler,
-  submitClickHandler,
-  onDelete,
-}) {
+export default function Education({ setUpdatedEducationHistory }) {
   const [visible, setVisible] = useState(false);
+  const [educationHistory, setEducationHistory] = useState([]);
+
+  function onEducationHistoryChange(value, index, property) {
+    setEducationHistory((prev) => {
+      const copy = [...prev];
+      copy[index] = { ...copy[index], [property]: value };
+      return copy;
+    });
+  }
+
+  function onEducationHistoryDelete(index) {
+    setEducationHistory((prev) => {
+      const copy = [...prev];
+      copy.splice(index, 1);
+      return copy;
+    });
+  }
   return (
     <div className="input-component">
       <Header
@@ -20,7 +32,7 @@ export default function Education({
         }}
       ></Header>
       <div className={visible ? "input-section" : "hide"}>
-        {educationHistoryArray.map((educationHistoryObject, index) => (
+        {educationHistory.map((educationHistoryObject, index) => (
           <div className="education-component">
             <span>
               <strong>School History {index + 1}</strong>
@@ -30,7 +42,7 @@ export default function Education({
                 School{" "}
                 <span
                   onClick={() => {
-                    onDelete(index);
+                    onEducationHistoryDelete(index);
                   }}
                 >
                   <strong>Delete</strong>
@@ -40,7 +52,7 @@ export default function Education({
                 type="text"
                 placeholder="Enter your school name"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "schoolName");
+                  onEducationHistoryChange(e.target.value, index, "schoolName");
                 }}
                 value={educationHistoryObject.schoolName}
               />
@@ -51,7 +63,7 @@ export default function Education({
                 type="text"
                 placeholder="Enter the location of the school"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "location");
+                  onEducationHistoryChange(e.target.value, index, "location");
                 }}
                 value={educationHistoryObject.location}
               />
@@ -62,7 +74,7 @@ export default function Education({
                 type="text"
                 placeholder="Enter the name of your degree"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "degree");
+                  onEducationHistoryChange(e.target.value, index, "degree");
                 }}
                 value={educationHistoryObject.degree}
               />
@@ -72,7 +84,11 @@ export default function Education({
               <textarea
                 placeholder="Describe your degree"
                 onChange={(e) => {
-                  onChange(e.target.value, index, "degreeDescription");
+                  onEducationHistoryChange(
+                    e.target.value,
+                    index,
+                    "degreeDescription"
+                  );
                 }}
                 value={educationHistoryObject.degreeDescription}
               ></textarea>
@@ -83,7 +99,11 @@ export default function Education({
                 <input
                   type="date"
                   onChange={(e) => {
-                    onChange(e.target.value, index, "startDate");
+                    onEducationHistoryChange(
+                      e.target.value,
+                      index,
+                      "startDate"
+                    );
                   }}
                   value={educationHistoryObject.startDate}
                 />
@@ -93,7 +113,7 @@ export default function Education({
                 <input
                   type="date"
                   onChange={(e) => {
-                    onChange(e.target.value, index, "endDate");
+                    onEducationHistoryChange(e.target.value, index, "endDate");
                   }}
                   value={educationHistoryObject.endDate}
                 />
@@ -104,14 +124,17 @@ export default function Education({
         <div className="button-wrapper">
           <button
             onClick={() => {
-              addClickHandler();
+              setEducationHistory((array) => [
+                ...array,
+                new EducationHistory(),
+              ]);
             }}
           >
             Add
           </button>
           <button
             onClick={() => {
-              submitClickHandler();
+              setUpdatedEducationHistory(educationHistory);
             }}
           >
             Submit

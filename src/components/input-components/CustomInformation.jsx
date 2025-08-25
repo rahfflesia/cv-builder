@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "../../styles/input-component.css";
 import Header from "./Header";
+import CustomInfo from "../../classes/customInfo";
 
-export default function CustomInformation({ onClick, setCustomInfo }) {
+export default function CustomInformation({ setUpdatedCustomInfo }) {
   const [visible, setVisible] = useState(false);
+  const [customInfo, setCustomInfo] = useState(new CustomInfo());
   return (
     <div className="input-component">
       <Header
@@ -36,7 +38,7 @@ export default function CustomInformation({ onClick, setCustomInfo }) {
         <div className="button-wrapper">
           <button
             onClick={() => {
-              onClick();
+              setUpdatedCustomInfo(customInfo);
             }}
           >
             Submit

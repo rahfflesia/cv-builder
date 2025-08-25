@@ -2,8 +2,9 @@ import { useState } from "react";
 import "../../styles/input-component.css";
 import Header from "./Header";
 
-export default function ProfessionalSummary({ onClick, setSummary }) {
+export default function ProfessionalSummary({ setLatestSummary }) {
   const [visible, setVisible] = useState(false);
+  const [summary, setSummary] = useState("");
   return (
     <div className="input-component">
       <Header
@@ -24,7 +25,7 @@ export default function ProfessionalSummary({ onClick, setSummary }) {
         <div className="button-wrapper">
           <button
             onClick={() => {
-              onClick();
+              setLatestSummary(summary);
             }}
           >
             Submit

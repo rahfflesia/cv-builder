@@ -14,15 +14,14 @@ import ResumeCustomInformation from "./components/cv-components/ResumeCustomInfo
 import ResumeWorkExperience from "./components/cv-components/ResumeWorkExperience";
 import ResumeEducation from "./components/cv-components/ResumeEducation";
 import { useState } from "react";
-import html2pdf from "html2pdf.js";
 import GeneralInfo from "./classes/generalInfo";
 import CustomInfo from "./classes/customInfo";
 import WorkExperience from "./classes/workExperience";
 import EducationHistory from "./classes/educationHistory";
+import exportPdf from "./utils/exportPdf";
 
 function App() {
   /* Header state variables */
-  const [generalInfo, setGeneralInfo] = useState(new GeneralInfo());
   const [latestGeneralInfo, setLatestGeneralInfo] = useState(
     new GeneralInfo(
       DefaultPicture,
@@ -34,13 +33,11 @@ function App() {
   );
 
   /* Professional summary state variables */
-  const [summary, setSummary] = useState("");
   const [latestSummary, setLatestSummary] = useState(
     "Results-driven Software Engineer with 5 years of experience designing, developing, and optimizing scalable applications and systems. Skilled in full-stack development, cloud technologies, and agile methodologies, with a strong focus on writing clean, maintainable code and delivering high-quality solutions that meet business needs. Adept at collaborating across cross-functional teams, solving complex technical challenges, and continuously learning new tools and frameworks to drive innovation and efficiency."
   );
 
   /* Skills state variables */
-  const [skills, setSkills] = useState([]);
   const [skillsValues, setSkillsValues] = useState([
     "JavaScript",
     "TypeScript",
@@ -57,30 +54,12 @@ function App() {
     "Git",
   ]);
 
-  function onSkillChange(value, index) {
-    setSkills((prev) => {
-      const copy = [...prev];
-      copy[index] = value;
-      return copy;
-    });
-  }
-
-  function onSkillDelete(index) {
-    setSkills((prev) => {
-      const copy = [...prev];
-      copy.splice(index, 1);
-      return copy;
-    });
-  }
-
   /* Custom information state variables */
-  const [customInfo, setCustomInfo] = useState(new CustomInfo());
   const [updatedCustomInfo, setUpdatedCustomInfo] = useState(
     new CustomInfo("FUN FACT", "I'm a one eyed ghoul.")
   );
 
   /* Work experience state variables */
-  const [workExperience, setWorkExperience] = useState([]);
   const [updatedWorkExperience, setUpdatedWorkExperience] = useState([
     new WorkExperience(
       "Microsoft",
@@ -100,24 +79,7 @@ function App() {
     ),
   ]);
 
-  function onWorkExperienceChange(value, index, property) {
-    setWorkExperience((prev) => {
-      const copy = [...prev];
-      copy[index] = { ...copy[index], [property]: value };
-      return copy;
-    });
-  }
-
-  function onWorkExperienceDelete(index) {
-    setWorkExperience((prev) => {
-      const copy = [...prev];
-      copy.splice(index, 1);
-      return copy;
-    });
-  }
-
   /* Education history state variables */
-  const [educationHistory, setEducationHistory] = useState([]);
   const [updatedEducationHistory, setUpdatedEducationHistory] = useState([
     new EducationHistory(
       "Massachusetts Institute of Technology",
@@ -129,92 +91,22 @@ function App() {
     ),
   ]);
 
-  function onEducationHistoryChange(value, index, property) {
-    setEducationHistory((prev) => {
-      const copy = [...prev];
-      copy[index] = { ...copy[index], [property]: value };
-      return copy;
-    });
-  }
-
-  function onEducationHistoryDelete(index) {
-    setEducationHistory((prev) => {
-      const copy = [...prev];
-      copy.splice(index, 1);
-      return copy;
-    });
-  }
-
   return (
     <div className="app">
       <section className="data-section">
-        <General
-          setGeneralInfo={setGeneralInfo}
-          onClick={() => {
-            setLatestGeneralInfo(generalInfo);
-          }}
-        ></General>
+        <General setLatestGeneralInfo={setLatestGeneralInfo}></General>
         <ProfessionalSummary
-          onClick={() => {
-            setLatestSummary(summary);
-          }}
-          setSummary={setSummary}
+          setLatestSummary={setLatestSummary}
         ></ProfessionalSummary>
-        <Skills
-          skillsArray={skills}
-          addClickHandler={() => {
-            setSkills((array) => [...array, ""]);
-          }}
-          onChange={onSkillChange}
-          submitClickHandler={() => {
-            setSkillsValues(skills);
-          }}
-          onDelete={onSkillDelete}
-        ></Skills>
+        <Skills setSkillsValues={setSkillsValues}></Skills>
         <Education
-          educationHistoryArray={educationHistory}
-          addClickHandler={() => {
-            setEducationHistory((array) => [...array, new EducationHistory()]);
-          }}
-          onChange={onEducationHistoryChange}
-          submitClickHandler={() => {
-            setUpdatedEducationHistory(educationHistory);
-          }}
-          onDelete={onEducationHistoryDelete}
+          setUpdatedEducationHistory={setUpdatedEducationHistory}
         ></Education>
-        <Work
-          workExperienceArray={workExperience}
-          addClickHandler={() => {
-            setWorkExperience((array) => [...array, new WorkExperience()]);
-          }}
-          submitClickHandler={() => {
-            setUpdatedWorkExperience(workExperience);
-          }}
-          onChange={onWorkExperienceChange}
-          onDelete={onWorkExperienceDelete}
-        ></Work>
+        <Work setUpdatedWorkExperience={setUpdatedWorkExperience}></Work>
         <CustomInformation
-          setCustomInfo={setCustomInfo}
-          onClick={() => {
-            setUpdatedCustomInfo(customInfo);
-          }}
+          setUpdatedCustomInfo={setUpdatedCustomInfo}
         ></CustomInformation>
-        <button
-          onClick={() => {
-            const cv = document.getElementById("cv-component");
-            const opt = {
-              margin: [15, 15],
-              filename: "cv.pdf",
-              html2canvas: { scale: 2, letterRendering: true },
-              image: { type: "jpeg", quality: 1 },
-              jsPDF: { unit: "pt", format: "letter", orientation: "portrait" },
-              pagebreak: { mode: ["avoid-all", "css", "legacy"] },
-            };
-            html2pdf().from(cv).set(opt).save();
-          }}
-        >
-          Save as PDF
-        </button>
+        <button onClick={exportPdf}>Save as PDF</button>
       </section>
       <section className="cv-section" id="cv-component">
         <ResumeHeader generalDataObject={latestGeneralInfo}></ResumeHeader>
